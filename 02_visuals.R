@@ -14,6 +14,7 @@ install.packages(setdiff(pkgs, rownames(installed.packages())))
 invisible(lapply(pkgs, FUN = library, character.only = TRUE))
 
 # load data
+<<<<<<< HEAD
 BelgiumExport_nation <- read.csv("Belgium_export-nation.csv", sep=";")
 
 # create folder if not existing
@@ -37,3 +38,6 @@ ggsave(graph_nation, filename = "graph-viral_ratio-nation.png", path = "plot")
 cat("- Success : visuals saved \n")
 
 #add a test line for pushing
+=======
+
+
