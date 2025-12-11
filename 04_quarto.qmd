@@ -38,12 +38,17 @@ Latest results dating of `r format(date_reporting, "%G-W%V")` (`r format(date_re
 ## National level
 
 Viral concentration of two wastewater treatment plants:
+Volgt
 
 ![](./plot/graph_oostende_aalst.png)
 
 ## Individual area level
 
 Table of two wastewater treatment plants :
+
+![](./tbl_nation.csv)
+
+
 
 ```{r}
 # tbl_nation
