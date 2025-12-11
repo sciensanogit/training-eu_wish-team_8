@@ -8,7 +8,7 @@
 
 # Load packages ----
 # select packages
-pkgs <- c("dplyr", "tidyr", "zoo", "writexl", "ggplot2")
+pkgs <- c("dplyr", "tidyr", "zoo", "writexl", "ggplot2", "stringr")
 # install packages
 install.packages(setdiff(pkgs, rownames(installed.packages())))
 invisible(lapply(pkgs, FUN = library, character.only = TRUE))
@@ -37,10 +37,10 @@ df <- df_sc %>%
 
 # clean data
 df <- df %>%
-  select(siteName, collDTStart, labName, labProtocolID, flowRate, popServ, measure, value)
+  select(siteName, collDTStart, labName, labProtocolID, flowRate, popServ, measure, value, quality)
 
 # format date
-df$date <- as.Date(df$date)
+df$date <- as.Date(df$collDTStart)
 
 # set and subset dates
 date_reporting <- as.Date("2025-09-01", format = "%Y-%m-%d")
@@ -48,22 +48,48 @@ date_graph_start <- as.Date("2024-09-01", format = "%Y-%m-%d")
 date_graph_end <- as.Date("2025-12-01", format = "%Y-%m-%d")
 
 # subset sars and pmmv data based on labProtocolID used betwen date_start and date_end
+df_subset<-df %>% 
+  filter(
+    between(date, date_graph_start, date_graph_end),
+    labProtocolID%in%c("SC_COV_4.1", "UA_COV_4.0", "SC_PMMV_2.1", "UA_PMMV_2.0"))
 # display existing labProtocolID
-# unique(df$labProtocolID)
+unique(df$labProtocolID)
+unique(df$measure)
 
 # rename measures
+df_renamed<-df_subset %>% mutate(measure=
+  if_else(str_detect(
+    measure, "SARS"), "SARS", "PMMV"))
 # diplay existing measure
 # unique(df$measure)
 
 # translate siteName to english
+df_trans<-df_renamed %>%  mutate(
+  siteName=str_replace(siteName, "Sud", "South"),
+  siteName=str_replace(siteName, "Nord", "North")
+)
 
 # apply LOQ provided by the lab
+df_loq<-df_trans %>% mutate(
+  value=case_when(measure=="PMMV"&value<250 ~ NA, TRUE ~ value),
+  value=case_when(measure=="SARS"&value<8 ~ NA, TRUE ~ value)
+)
 
 # remove outliers
+df_out<-df_loq %>% mutate(
+  value=case_when(quality=="Quality concerns" ~ NA, TRUE ~ value)
+)
 
 # compute mean of replicated analysis of each measure
-
+df_mean<-df_out %>% 
+  group_by(
+    siteName, date, measure) %>% 
+  summarize(summarized_values=mean(value))
 # compute viral ratio
+df_ratio<-df_mean %>% 
+  pivot_wider(
+    names_from=measure, values_from = summarized_values) %>% 
+  mutate(viral_ratio=SARS/PMMV)
 # unique(df$measure) ...
 
 # compute moving average on past 14 days
@@ -72,9 +98,9 @@ date_graph_end <- as.Date("2025-12-01", format = "%Y-%m-%d")
 
 # export data ----
 # create folder if not existing
-
+dir.create("data")
 # export as csv
-
+write.csv(df_ratio, "data/viral_ratio_data_CM.csv")
 # export as xls
 
 # export as rds
