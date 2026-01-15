@@ -19,7 +19,7 @@ invisible(lapply(pkgs, FUN = library, character.only = TRUE))
 #df_nation <- read.table(file = "./Belgium_export-nation.csv", sep = ";", dec = ".", header = T)
 
 # load data - after data prep is done
-df_nation <- read.table(file = "./data_folder/Belgium_export-nation.csv", sep = ";", dec = ".", header = T)
+df_nation <- read.table(file = "./data/Belgium_export-nation.csv", sep = ";", dec = ".", header = T)
 
 
 #Make table
@@ -43,4 +43,4 @@ table_nation
 
 
 # display msg
-#cat("- Success : tables saved \n")
+cat("- Success : tables saved \n")
