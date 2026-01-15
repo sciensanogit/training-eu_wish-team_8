@@ -28,3 +28,4 @@ quarto_render(input = "04_quarto.qmd",
               output_format = format_output)
 
 cat("- Success : quarto render \n")
+#quarto::quarto_render("04_quarto.qmd")

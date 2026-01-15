@@ -14,7 +14,7 @@ install.packages(setdiff(pkgs, rownames(installed.packages())))
 invisible(lapply(pkgs, FUN = library, character.only = TRUE))
 
 # load data
-df_nation <- read.table(file = "./data_example/Belgium_export-nation.csv", sep = ";", dec = ".", header = T)
+df_nation <- read.table(file = "Belgium_export-nation.csv", sep = ";", dec = ".", header = T)
 
 # Save table ----
 tbl_nation <- df_nation %>%
