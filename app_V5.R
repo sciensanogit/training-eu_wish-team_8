@@ -106,6 +106,7 @@ server <- function(input, output, session) {
     data <- filtered_data()
     
     p <- ggplot(data, aes(x = date)) +
+      geom_line(aes(y = value_pmmv_avg14d_past), colour = "#BCCF00FF", size = 1, na.rm = T) +
       geom_point(aes(y = value_pmmv), colour = "#92D050", size = 1, na.rm = T) +
       scale_y_continuous(limits = c(0, NA)) +
       labs(
