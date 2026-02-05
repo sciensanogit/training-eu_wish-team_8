@@ -51,7 +51,7 @@ ui <- navbarPage(
     
     # Bottom acknowledgment box
     div(class = "info-box",
-        "Welcome to this nice page describing..." )
+        "Welcome to wastewater based surveillance for Belgium dashboard." )
   ),
   
   
@@ -59,7 +59,7 @@ ui <- navbarPage(
     "SARS-CoV-2",
     # Bottom acknowledgment box
     div(class = "info-box",
-        "Add a description of the surveillance..." )
+        "This page provides information on the wastewater surveillance for Belgium. It includes SARS Co-V2 and Influenza and " )
     ,
     
     # Three horizontal info boxes
@@ -105,7 +105,7 @@ server <- function(input, output, session) {
     data <- filtered_data()
     
     p <- ggplot(data, aes(x = date)) +
-      geom_point(aes(y = value_pmmv), colour = "#92D050", size = 1, na.rm = T) +
+      geom_point(aes(y = value_pmmv), colour = "blue", size = 1, na.rm = T) +
       scale_y_continuous(limits = c(0, NA)) +
       labs(
         title = paste(input$site),
