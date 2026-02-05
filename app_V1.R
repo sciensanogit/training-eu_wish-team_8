@@ -51,7 +51,7 @@ ui <- navbarPage(
     
     # Bottom acknowledgment box
     div(class = "info-box",
-        "Welcome to this nice page describing..." )
+        "Welcome to this page describing national wastewater data on viral load of SARS-CoV-2" )
   ),
   
   
@@ -64,9 +64,9 @@ ui <- navbarPage(
     
     # Three horizontal info boxes
     fluidRow(
-      column(4, div(class = "info-box", "Number of site = 30")),
-      column(4, div(class = "info-box", "Next sampling date = Wednesay")),
-      column(4, div(class = "info-box", "Next dashboard update = Monday")
+      column(4, div(class = "info-box", "Number of site = 30", style = "color: purple;")),
+      column(4, div(class = "info-box", "Next sampling date = Wednesay", style = "color: brown;")),
+      column(4, div(class = "info-box", "Next dashboard update = Monday", style = "color: white;")
       )
     ),
     
